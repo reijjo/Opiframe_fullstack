@@ -41,7 +41,14 @@ const ShoppingForm = (props: Props) => {
   };
 
   return (
-    <div style={{ width: "40%", backgroundColor: "lightblue", margin: "auto" }}>
+    <div
+      style={{
+        width: "40%",
+        backgroundColor: "lightblue",
+        margin: "auto",
+        padding: "8px 16px",
+      }}
+    >
       <form onSubmit={onSubmit}>
         <label htmlFor="type" className="form-label">
           Type
@@ -80,7 +87,12 @@ const ShoppingForm = (props: Props) => {
           value={state.price}
         />
 
-        <input type="submit" value="Add" className="btn btn-secondary" />
+        <input
+          type="submit"
+          value="Add"
+          className="btn btn-secondary"
+          style={{ marginTop: 8 }}
+        />
       </form>
     </div>
   );
