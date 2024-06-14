@@ -27,6 +27,10 @@ const GamePage = ({ name }: Props) => {
     setTheNumber(answer);
   }, []);
 
+  useEffect(() => {
+    console.log("limits", limits);
+  }, [limits]);
+
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setGuess(value);
