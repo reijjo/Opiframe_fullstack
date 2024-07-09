@@ -40,6 +40,7 @@ app.post("/api/books", function (req, res) {
 
 app.put("/api/books/:id", function (req, res) {
   let tempId = parseInt(req.params.id);
+
   for (let i = 0; i < database.length; i++) {
     if (tempId === database[i].id) {
       database[i].loaned = !database[i].loaned;

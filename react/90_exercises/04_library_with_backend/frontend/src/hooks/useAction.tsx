@@ -45,6 +45,10 @@ const useAction = () => {
             });
             return;
           }
+          case "editItem": {
+            getList();
+            return;
+          }
           default:
             return;
         }
@@ -59,6 +63,7 @@ const useAction = () => {
   }, [urlRequest]);
 
   // Helper functions
+  // Get all books
   const getList = () => {
     setUrlRequest({
       request: new Request("/api/books", {
@@ -68,7 +73,21 @@ const useAction = () => {
     });
   };
 
-  return { state };
+  // Edit book
+  const edit = (item: LibraryItem) => {
+    setUrlRequest({
+      request: new Request(`/api/books/` + item.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }),
+      action: "editItem",
+    });
+  };
+
+  return { state, edit };
 };
 
 export default useAction;
