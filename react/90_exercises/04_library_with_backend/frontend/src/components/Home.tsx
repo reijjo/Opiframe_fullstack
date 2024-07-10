@@ -1,68 +1,22 @@
-import { useState } from "react";
+// import { useState } from "react";
 import LibraryItem from "../models/LibraryItem";
-import { Row, EditRow } from "./index";
-
-interface State {
-  removeIndex: number;
-  editIndex: number;
-}
+import { Row } from "./index";
 
 interface Props {
   list: LibraryItem[];
   edit(item: LibraryItem): void;
+  getList(): void;
+  getLoaned(): void;
+  getAvailable(): void;
 }
-const Home = ({ list, edit }: Props) => {
-  const [state, setState] = useState<State>({
-    removeIndex: -1,
-    editIndex: -1,
-  });
 
-  const changeMode = (mode: string, index: number) => {
-    switch (mode) {
-      case "remove":
-        setState({
-          removeIndex: index,
-          editIndex: -1,
-        });
-        return;
-      case "edit":
-        setState({
-          removeIndex: -1,
-          editIndex: index,
-        });
-        return;
-      case "cancel":
-        setState({
-          removeIndex: -1,
-          editIndex: -1,
-        });
-        return;
-      default:
-        return;
-    }
-  };
-
+const Home = ({ list, edit, getList, getLoaned, getAvailable }: Props) => {
   const editItem = (item: LibraryItem) => {
-    console.log("editItem", item);
     edit(item);
-    changeMode("cancel", 0);
   };
 
   const libraryItems = list.map((item, index) => {
-    if (state.editIndex === index) {
-      return (
-        <EditRow
-          key={item.id}
-          book={item}
-          editItem={editItem}
-          changeMode={changeMode}
-        />
-      );
-    }
-
-    return (
-      <Row key={item.id} item={item} changeMode={changeMode} index={index} />
-    );
+    return <Row key={item.id} item={item} index={index} editItem={editItem} />;
   });
 
   if (list && list.length > 0) {
@@ -71,9 +25,11 @@ const Home = ({ list, edit }: Props) => {
 
   return (
     <main>
-      <header>
-        <h1>Library</h1>
-      </header>
+      <div className="filter-buttons">
+        <button onClick={getList}>All books</button>
+        <button onClick={getAvailable}>Available books</button>
+        <button onClick={getLoaned}>Loaned books</button>
+      </div>
       <table>
         <thead>
           <tr>
@@ -81,8 +37,7 @@ const Home = ({ list, edit }: Props) => {
             <th>Author</th>
             <th>Year</th>
             <th>Loaned</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>{libraryItems}</tbody>

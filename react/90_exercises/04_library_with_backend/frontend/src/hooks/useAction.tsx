@@ -45,7 +45,31 @@ const useAction = () => {
             });
             return;
           }
+          case "getLoaned": {
+            const temp = await response.json();
+            const list = temp as LibraryItem[];
+            const loaned = list.filter((item) => item.loaned);
+
+            setState({
+              list: loaned,
+            });
+            return;
+          }
+          case "getAvailable": {
+            const temp = await response.json();
+            const list = temp as LibraryItem[];
+            const available = list.filter((item) => !item.loaned);
+
+            setState({
+              list: available,
+            });
+            return;
+          }
           case "editItem": {
+            getList();
+            return;
+          }
+          case "addBook": {
             getList();
             return;
           }
@@ -73,6 +97,40 @@ const useAction = () => {
     });
   };
 
+  // Get loaned books
+  const getLoaned = () => {
+    setUrlRequest({
+      request: new Request("/api/books", {
+        method: "GET",
+      }),
+      action: "getLoaned",
+    });
+  };
+
+  // Get available books
+  const getAvailable = () => {
+    setUrlRequest({
+      request: new Request("/api/books", {
+        method: "GET",
+      }),
+      action: "getAvailable",
+    });
+  };
+
+  // Add book
+  const add = (item: LibraryItem) => {
+    setUrlRequest({
+      request: new Request("/api/books", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+      }),
+      action: "addBook",
+    });
+  };
+
   // Edit book
   const edit = (item: LibraryItem) => {
     setUrlRequest({
@@ -87,7 +145,7 @@ const useAction = () => {
     });
   };
 
-  return { state, edit };
+  return { state, edit, getLoaned, getList, getAvailable, add };
 };
 
 export default useAction;

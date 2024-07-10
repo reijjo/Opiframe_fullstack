@@ -1,7 +1,8 @@
-Luodaan frontend kirjastolle. Kirjasto on kolmen funktion REST API. Kirjat voi hakea, niitä voi lisätä ja niitä voi
-lainata ja palauttaa. Tämä tapahtuu samassa osoitteessa PUT komennolla. Frontendissä tulee olla lista (table),
-jota voi filtteröidä loaned attribuutin mukaan. Voi siis katsoa kaikkia kirjoja, lainattuja kirjoja tai
-lainaamattomia kirjoja. Lisäksi tarvitaan form, jossa kirjoja voi lisätä. Seuraa Shopping Appin rakenneta.
+Luodaan frontend kirjastolle. Kirjasto on kolmen funktion REST API. Kirjat voi hakea,
+niitä voi lisätä ja niitä voi lainata ja palauttaa. Tämä tapahtuu samassa osoitteessa PUT komennolla.
+Frontendissä tulee olla lista (table), jota voi filtteröidä loaned attribuutin mukaan.
+Voi siis katsoa kaikkia kirjoja, lainattuja kirjoja tai lainaamattomia kirjoja.
+Lisäksi tarvitaan form, jossa kirjoja voi lisätä. Seuraa Shopping Appin rakenneta.
 Käyttäkää joko Bootstrappiä tai jotain muuta teemakirjastoa. CSS:n saa toki tehdä myös itse.
 
 Book objekti
