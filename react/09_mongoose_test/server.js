@@ -14,7 +14,6 @@ mongoose.connect(url).then(
   () => console.log("Connected to Mongo Atlas."),
   (err) => console.log("Failed to connect Mongo Atlas.", err)
 );
-console.log("mongo_url", url);
 
 app.listen(3001, () => {
   console.log("Server is running on port 3001");
