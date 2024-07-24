@@ -1,11 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import ShoppingItem from "../models/ShoppingItem";
-import { useDispatch, useSelector } from "react-redux";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
-import { add } from "../actions/shoppingActions";
-import { AppState } from "../types/states";
+import { useDispatch } from "react-redux";
+import { PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { add } from "../store/shoppingSlice";
 
 interface State {
   type: string;
@@ -20,11 +18,9 @@ const ShoppingForm = () => {
     price: 0,
   });
 
-  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
-  const tokenSelector = (state: AppState) => state.login.token;
-  const token = useSelector(tokenSelector);
+  const dispatch: ThunkDispatch<any, any, PayloadAction> = useDispatch();
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setState((state) => {
       return {
         ...state,
@@ -33,12 +29,12 @@ const ShoppingForm = () => {
     });
   };
 
-  const onSubmit = (event: React.SyntheticEvent) => {
+  const onSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
 
-    const item = new ShoppingItem(state.type, state.count, state.price, "0");
+    const item = new ShoppingItem(state.type, state.count, state.price, 0);
+    dispatch(add(item));
 
-    dispatch(add(token, item));
     setState({
       type: "",
       count: 0,
@@ -50,12 +46,12 @@ const ShoppingForm = () => {
     <div
       style={{
         width: "40%",
-        backgroundColor: "pink",
+        backgroundColor: "lightblue",
         margin: "auto",
-        textAlign: "center",
+        padding: "8px 16px",
       }}
     >
-      <form onSubmit={onSubmit} className="m-5">
+      <form onSubmit={onSubmit}>
         <label htmlFor="type" className="form-label">
           Type
         </label>
@@ -67,6 +63,7 @@ const ShoppingForm = () => {
           onChange={onChange}
           value={state.type}
         />
+
         <label htmlFor="count" className="form-label">
           Count
         </label>
@@ -78,6 +75,7 @@ const ShoppingForm = () => {
           onChange={onChange}
           value={state.count}
         />
+
         <label htmlFor="price" className="form-label">
           Price
         </label>
@@ -90,7 +88,13 @@ const ShoppingForm = () => {
           onChange={onChange}
           value={state.price}
         />
-        <input type="submit" className="btn btn-primary" value="Add" />
+
+        <input
+          type="submit"
+          value="Add"
+          className="btn btn-secondary"
+          style={{ marginTop: 8 }}
+        />
       </form>
     </div>
   );

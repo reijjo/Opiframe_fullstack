@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import ShoppingItem from "../models/ShoppingItem";
-import Row from "./Row";
 import RemoveRow from "./RemoveRow";
 import EditRow from "./EditRow";
+import Row from "./Row";
 import { useDispatch, useSelector } from "react-redux";
-import { AnyAction } from "redux";
-import { ThunkDispatch } from "redux-thunk";
-import { remove, edit } from "../actions/shoppingActions";
-import { AppState } from "../types/states";
+import { PayloadAction, ThunkDispatch } from "@reduxjs/toolkit";
+import { AppState, remove, edit } from "../store/shoppingSlice";
 
 interface State {
   removeIndex: number;
@@ -21,55 +19,46 @@ const ShoppingList = () => {
     editIndex: -1,
   });
 
-  const dispatch: ThunkDispatch<any, any, AnyAction> = useDispatch();
-  const appStateSelector = (state: AppState) => {
-    return {
-      list: state.shopping.list,
-      token: state.login.token,
-    };
-  };
-  const appState = useSelector(appStateSelector);
+  const dispatch: ThunkDispatch<any, any, PayloadAction> = useDispatch();
+  const listSelector = (state: AppState) => state.list;
+  const list = useSelector(listSelector);
 
   const changeMode = (mode: string, index: number) => {
     switch (mode) {
-      case "remove": {
+      case "remove":
         setState({
           removeIndex: index,
           editIndex: -1,
         });
         return;
-      }
-      case "edit": {
+      case "edit":
         setState({
           removeIndex: -1,
           editIndex: index,
         });
         return;
-      }
-      case "cancel": {
+      case "cancel":
         setState({
           removeIndex: -1,
           editIndex: -1,
         });
         return;
-      }
-      default: {
+      default:
         return;
-      }
     }
   };
 
-  const removeItem = (id: string) => {
-    dispatch(remove(appState.token, id));
+  const removeItem = (id: number) => {
+    dispatch(remove(id));
     changeMode("cancel", 0);
   };
 
   const editItem = (item: ShoppingItem) => {
-    dispatch(edit(appState.token, item));
+    dispatch(edit(item));
     changeMode("cancel", 0);
   };
 
-  const shoppingItems = appState.list.map((item, index) => {
+  const shoppingItems = list.map((item, index) => {
     if (state.removeIndex === index) {
       return (
         <RemoveRow
@@ -80,6 +69,7 @@ const ShoppingList = () => {
         />
       );
     }
+
     if (state.editIndex === index) {
       return (
         <EditRow
@@ -90,6 +80,7 @@ const ShoppingList = () => {
         />
       );
     }
+
     return (
       <Row key={item.id} item={item} index={index} changeMode={changeMode} />
     );
