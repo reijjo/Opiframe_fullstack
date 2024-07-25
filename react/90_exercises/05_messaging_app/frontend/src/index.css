@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: grid;
+  grid-template-rows: 8vh 1fr;
+
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  padding: 2vh 16px;
+}
+
+.message {
+  /* border: 2px solid;
+  border-radius: 4px; */
+
+  padding: 8px 16px;
+  margin: 16px 0;
+
+  text-align: center;
+}
