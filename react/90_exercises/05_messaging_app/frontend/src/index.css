@@ -19,9 +19,11 @@ main {
   flex-direction: column;
 
   padding: 2vh 16px;
+
+  background-color: hsl(195, 53%, 95%);
 }
 
-.message {
+.notification {
   /* border: 2px solid;
   border-radius: 4px; */
 
