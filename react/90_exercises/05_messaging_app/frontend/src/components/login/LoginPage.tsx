@@ -36,6 +36,10 @@ const LoginPage = () => {
     console.log("submit jee", user);
   };
 
+  const onLogin = (event: SyntheticEvent) => {
+    event.preventDefault();
+  };
+
   console.log("user", user);
 
   return (
