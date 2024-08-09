@@ -119,12 +119,10 @@ app.post("/login", function (req, res) {
           token: token,
           messagetoken: registeredUsers[i].messagetoken,
         });
-        return res
-          .status(200)
-          .json({
-            token: token,
-            messagetoken: registeredUsers[i].messagetoken,
-          });
+        return res.status(200).json({
+          token: token,
+          messagetoken: registeredUsers[i].messagetoken,
+        });
       }
     }
   }

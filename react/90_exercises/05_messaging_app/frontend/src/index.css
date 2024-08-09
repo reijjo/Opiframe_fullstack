@@ -33,6 +33,14 @@ main {
   text-align: center;
 }
 
+.info-error {
+  color: firebrick;
+}
+
+.info-success {
+  color: darkolivegreen;
+}
+
 button {
   padding: 4px 8px;
 

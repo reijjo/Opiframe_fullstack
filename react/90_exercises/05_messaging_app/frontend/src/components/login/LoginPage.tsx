@@ -1,13 +1,11 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
+
 import { Notification, TextInput } from "../../components";
 import { useAppDispatch } from "../../store/hooks";
-import { setNotification } from "../../reducers/notificationReducer";
-import "./LoginPage.css";
+import { loginUser, logoutUser, registerUser } from "../../slices/userSlice";
+import { User } from "../../utils/types";
 
-interface User {
-  username: string;
-  password: string;
-}
+import "./LoginPage.css";
 
 const LoginPage = () => {
   const [user, setUser] = useState<User>({
@@ -16,10 +14,6 @@ const LoginPage = () => {
   });
 
   const dispatch = useAppDispatch();
-
-  const testMessage = () => {
-    dispatch(setNotification("toimitaanko"));
-  };
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setUser((user) => {
@@ -30,14 +24,28 @@ const LoginPage = () => {
     });
   };
 
-  const onRegister = (event: SyntheticEvent) => {
+  const onRegister = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    console.log("submit jee", user);
+    dispatch(registerUser(user));
   };
 
-  const onLogin = (event: SyntheticEvent) => {
+  const onLogin = async (event: SyntheticEvent) => {
     event.preventDefault();
+
+    dispatch(loginUser(user));
+  };
+
+  const handleLogout = () => {
+    const userState = sessionStorage.getItem("userstate");
+    console.log("token", userState);
+    if (userState) {
+      const parsedUserState = JSON.parse(userState);
+      console.log("parsedUserState", parsedUserState);
+      const token = parsedUserState.token;
+      console.log("token", token);
+      dispatch(logoutUser(token));
+    }
   };
 
   console.log("user", user);
@@ -74,25 +82,13 @@ const LoginPage = () => {
             >
               Register
             </button>
-            <button type="button" className="button-outline">
+            <button type="button" className="button-outline" onClick={onLogin}>
               Login
-            </button>
-          </div>
-
-          <div className="login-buttons">
-            <button
-              type="button"
-              className="button-outline"
-              onClick={testMessage}
-            >
-              SetMessage
-            </button>
-            <button type="button" className="button-filled">
-              ClearMessage
             </button>
           </div>
         </form>
       </div>
+      <button onClick={handleLogout}>Logout</button>
     </main>
   );
 };

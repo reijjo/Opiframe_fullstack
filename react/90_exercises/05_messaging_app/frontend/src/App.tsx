@@ -5,8 +5,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Navbar, LoginPage } from "./components";
+import { useAppSelector } from "./store/hooks";
+import { AllStates } from "./utils/types";
 
 function App() {
+  const userState = useAppSelector((state: AllStates) => state.user);
+
+  console.log("userState", userState);
+
   return (
     <Router>
       <Navbar />
