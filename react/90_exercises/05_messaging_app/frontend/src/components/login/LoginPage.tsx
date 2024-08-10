@@ -1,11 +1,14 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 
 import { Notification, TextInput } from "../../components";
-import { useAppDispatch } from "../../store/hooks";
-import { loginUser, logoutUser, registerUser } from "../../slices/userSlice";
+// import { useAppDispatch } from "../../store/hooks";
+// import { loginUser, registerUser } from "../../slices/userSlice";
 import { User } from "../../utils/types";
 
 import "./LoginPage.css";
+import { useAppDispatch } from "../../store/hooks";
+import { setNotification } from "../../slices/notificationSlice";
+import { registerUser } from "../../slices/userSlice";
 
 const LoginPage = () => {
   const [user, setUser] = useState<User>({
@@ -33,22 +36,10 @@ const LoginPage = () => {
   const onLogin = async (event: SyntheticEvent) => {
     event.preventDefault();
 
-    dispatch(loginUser(user));
-  };
+    dispatch(setNotification("Logging user"));
 
-  const handleLogout = () => {
-    const userState = sessionStorage.getItem("userstate");
-    console.log("token", userState);
-    if (userState) {
-      const parsedUserState = JSON.parse(userState);
-      console.log("parsedUserState", parsedUserState);
-      const token = parsedUserState.token;
-      console.log("token", token);
-      dispatch(logoutUser(token));
-    }
+    console.log("login");
   };
-
-  console.log("user", user);
 
   return (
     <main>
@@ -88,7 +79,6 @@ const LoginPage = () => {
           </div>
         </form>
       </div>
-      <button onClick={handleLogout}>Logout</button>
     </main>
   );
 };

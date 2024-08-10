@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import type { RootState } from "../store/store";
-import { Dispatch } from "redux";
+import { AppDispatch } from "../store/store";
 
 export interface NotificationState {
   value: string | null;
@@ -21,7 +20,7 @@ export const notificationSlice = createSlice({
 });
 
 export const setNotification = (content: string | null) => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(newNotification(null));
     dispatch(newNotification(content));
     setTimeout(() => {

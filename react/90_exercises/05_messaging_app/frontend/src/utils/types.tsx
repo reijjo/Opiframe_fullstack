@@ -1,22 +1,21 @@
-import { NotificationState } from "../slices/notificationSlice";
-
 export type User = {
   username: string;
   password: string;
 };
 
-export type Message = {
-  message: string;
-  infoColor?: string;
-};
-
-export type UserState = {
+export type AppState = {
   isLogged: boolean;
   token: string;
-  username: string;
+  usernames: string;
 };
 
-export type AllStates = {
-  user: UserState;
-  notification: NotificationState;
+export type ApiResponse = {
+  message: string;
+};
+
+export type LoginStatus = {
+  isLogged: boolean;
+  token: string;
+  messagetoken: string;
+  user: string;
 };

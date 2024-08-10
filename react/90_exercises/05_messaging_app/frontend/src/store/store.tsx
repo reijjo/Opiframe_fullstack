@@ -1,9 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import notificationReducer, {
-  NotificationState,
-} from "../slices/notificationSlice";
+import notificationReducer from "../slices/notificationSlice";
 import userReducer from "../slices/userSlice";
-import { UserState } from "../utils/types";
 
 export const store = configureStore({
   reducer: {
@@ -11,11 +8,6 @@ export const store = configureStore({
     user: userReducer,
   },
 });
-
-export const allStates = (state: {
-  notification: NotificationState;
-  user: UserState;
-}) => state.user;
 
 export type AppStore = typeof store;
 // Infer the `RootState` and `AppDispatch` types from the store itself

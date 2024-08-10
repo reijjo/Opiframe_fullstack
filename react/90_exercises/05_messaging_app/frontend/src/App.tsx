@@ -6,12 +6,11 @@ import {
 } from "react-router-dom";
 import { Navbar, LoginPage } from "./components";
 import { useAppSelector } from "./store/hooks";
-import { AllStates } from "./utils/types";
+import { RootState } from "./store/store";
 
 function App() {
-  const userState = useAppSelector((state: AllStates) => state.user);
-
-  console.log("userState", userState);
+  const rootState = useAppSelector((state: RootState) => state);
+  console.log("ROOT STATE", rootState);
 
   return (
     <Router>
