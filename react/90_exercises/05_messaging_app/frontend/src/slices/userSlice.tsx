@@ -5,11 +5,6 @@ import { userApi } from "../api/userApi";
 import { setNotification } from "./notificationSlice";
 import { isAxiosError } from "axios";
 
-const initialState: User = {
-  username: "",
-  password: "",
-};
-
 const getInitialState = (): LoginStatus => {
   const state = sessionStorage.getItem("loginstate");
   if (state) {
@@ -24,11 +19,14 @@ const getInitialState = (): LoginStatus => {
   }
 };
 
+const initialState: LoginStatus = getInitialState();
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     register: (state, action: PayloadAction<User>) => {
+      console.log("state", state, "action", action.payload);
       return { ...state, ...action.payload };
     },
   },
