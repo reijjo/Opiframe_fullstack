@@ -23,35 +23,36 @@ export default function App() {
   const handleGuess = () => {
     const parsedGuess = parseInt(guess, 10);
 
-    setState({ ...state, guesses: state.guesses + 1 });
-
     if (isNaN(parsedGuess)) {
       setState({ ...state, responseText: "That's not a number." });
     } else if (parsedGuess < state.correctNumber) {
-      setGuess("");
       setState({
         ...state,
+        guesses: state.guesses + 1,
         numberMin: parsedGuess + 1,
         responseText: "Number is too small.",
       });
-    } else if (parsedGuess > state.correctNumber) {
       setGuess("");
+    } else if (parsedGuess > state.correctNumber) {
       setState({
         ...state,
+        guesses: state.guesses + 1,
         numberMax: parsedGuess - 1,
         responseText: "Number is too big.",
       });
-    } else {
       setGuess("");
+    } else {
       setState({
         ...state,
-        responseText: `Woop woop! You guessed the number in ${state.guesses} guesses.`,
+        guesses: state.guesses + 1,
+        responseText: `Woop woop! You guessed the number in ${
+          state.guesses + 1
+        } guesses.`,
         woopwoop: true,
       });
+      setGuess("");
     }
   };
-
-  console.log("state", state);
 
   const handlePlayAgain = () => {
     setState({
