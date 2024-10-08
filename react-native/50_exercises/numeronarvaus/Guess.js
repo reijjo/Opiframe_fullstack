@@ -53,7 +53,8 @@ export const Guess = ({ state, setState }) => {
             setState({ ...state, responseText: "" });
           }}
           value={guess}
-          disabled={state.woopwoop}
+          editable={!state.woopwoop}
+          keyboardType="number-pad"
         />
         <Pressable
           style={styles.button}
